@@ -97,6 +97,7 @@
 (use-package winner)
 (winner-mode 1)
 
+(use-package ivy)
 (ivy-mode 1)
 
 
