@@ -59,6 +59,11 @@
 
 (use-package magit-popup)
 
+(use-package change-inner) ;; vim packages
+(use-package fold-this) ;; code folding
+(use-package ido) ;; ido menu
+
+
 
 (use-package neotree
   :config
@@ -127,26 +132,13 @@
 (use-package goto-chg)
 (use-package highlight-symbol)
 (use-package helm)
-
+(use-package jump-char)
+(use-package restart-emacs)
 
 (use-package yasnippet
   :config
   (yas-global-mode 1))
 
-(defun create-scratch-buffer nil
-  "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
-  (interactive)
-  (let ((n 0)
-        bufname)
-    (while (progn
-             (setq bufname (concat "*scratch"
-                                   (if (= n 0) "" (int-to-string n))
-                                   "*"))
-             (setq n (1+ n))
-             (get-buffer bufname)))
-    (switch-to-buffer (get-buffer-create bufname))
-    (emacs-lisp-mode)
-    ))
 
 
 ;; Package: volatile-highlights
@@ -179,27 +171,6 @@
   :ensure t
   :bind (("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
-
-(defun copy-file-name-to-clipboard ()
-  "Copy the current buffer file name to the clipboard."
-  (interactive)
-  (let ((filename (if (equal major-mode 'dired-mode)
-                      default-directory
-                    (buffer-file-name))))
-    (when filename
-      (kill-new filename)
-      (message "Copied buffer file name '%s' to the clipboard." filename))))
-
-(defun move-line-up ()
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
-
-(defun move-line-down ()
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1))
 
 
 

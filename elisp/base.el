@@ -1,7 +1,10 @@
 (package-initialize)
+
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/")
-             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+             '("elpy" . "http://jorgenschaefer.github.io/packages/")
+	     '("Sunrise commander" . "http://joseito.republika.pl/sunrise-commander/")
+	     )
 
 (when (not package-archive-contents)
   (package-refresh-contents))
