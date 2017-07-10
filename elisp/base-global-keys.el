@@ -20,7 +20,6 @@
 ;; iy-go-to-char - like f in Vim
 (global-set-key (kbd "M-m") 'jump-char-forward)
 (global-set-key (kbd "M-M") 'jump-char-backward)
-(global-set-key (kbd "s-m") 'jump-char-backward)
 
 
 ;; vim's ci and co commands
@@ -128,6 +127,16 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+
+
+;; key chords
+(require 'key-chord)
+
+(key-chord-define-global "BB" 'iswitchb)
+(key-chord-define-global "FF" 'find-file)
+(key-chord-define-global "jk" 'beginning-of-buffer)
+
+(key-chord-mode +1)
 
 
 
