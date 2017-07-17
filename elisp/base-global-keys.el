@@ -140,6 +140,8 @@
 (key-chord-define-global "jk" 'beginning-of-buffer)
 (key-chord-define-global ";;" 'jump-char-forward)
 (key-chord-define-global "::" 'jump-char-backward)
+(key-chord-define-global "``" 'goto-last-change)
+(key-chord-define-global "~~" 'goto-last-change-reverse)
 
 (key-chord-mode +1)
 
