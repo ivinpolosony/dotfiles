@@ -100,9 +100,10 @@
 (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
 (global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
 
-(global-set-key (kbd "M-<up>") 'move-line-up)
-(global-set-key (kbd "M-<down>") 'move-line-down)
-
+;; (global-set-key (kbd "M-<up>") 'move-line-up)
+;; (global-set-key (kbd "M-<down>") 'move-line-down)
+(global-set-key (kbd "M-<up>") 'move-region-up)
+(global-set-key (kbd "M-<down>") 'move-region-down)
 
 ;; Go to last change
 
@@ -131,10 +132,14 @@
 
 ;; key chords
 (require 'key-chord)
-
+;; (setq key-chord-two-keys-delay .015
+;;       key-chord-one-key-delay .020)
 (key-chord-define-global "BB" 'iswitchb)
 (key-chord-define-global "FF" 'find-file)
+(key-chord-define-global "XX" 'ivy-switch-buffer)
 (key-chord-define-global "jk" 'beginning-of-buffer)
+(key-chord-define-global ";;" 'jump-char-forward)
+(key-chord-define-global "::" 'jump-char-backward)
 
 (key-chord-mode +1)
 
