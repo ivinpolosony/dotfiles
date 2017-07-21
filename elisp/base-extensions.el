@@ -57,6 +57,9 @@
   ("C-x g e" . magit-ediff-resolve)
   ("C-x g r" . magit-rebase-interactive))
 
+(use-package indent-guide)
+(indent-guide-global-mode)
+
 (use-package magit-popup)
 
 (use-package change-inner) ;; vim packages
