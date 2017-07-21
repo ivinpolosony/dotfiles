@@ -16,6 +16,7 @@
 (global-set-key (kbd "M-Z") (lambda (char) (interactive "cZap to char: ") (zap-to-char 1 char)))
 (global-set-key (kbd "s-Z") (lambda (char) (interactive "cZap to char backwards: ") (zap-to-char -1 char)))
 
+(global-set-key (kbd "M-;") 'smart-comment)
 
 ;; iy-go-to-char - like f in Vim
 (global-set-key (kbd "M-m") 'jump-char-forward)

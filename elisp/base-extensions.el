@@ -8,11 +8,12 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package smart-comment)
 ;; (use-package dashboard
 ;;   :config
 ;;   (dashboard-setup-startup-hook))
 
-(use-package ediff
+(use-package ediff			
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq-default ediff-highlight-all-diffs 'nil)
