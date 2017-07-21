@@ -111,6 +111,14 @@
   (recentf-mode 1))
 
 (use-package smartparens)
+(use-package wrap-region)
+(wrap-region-mode t)
+(wrap-region-add-wrappers
+ '(("$" "$")
+   ("{-" "-}" "#")
+   ("/" "/" nil ruby-mode)
+   ("/* " " */" "#" (java-mode javascript-mode css-mode))
+   ("`" "`" nil (markdown-mode ruby-mode))))
 
 (use-package smex)
 
