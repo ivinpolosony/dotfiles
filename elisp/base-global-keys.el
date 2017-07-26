@@ -148,6 +148,8 @@
 (key-chord-define-global "~~" 'goto-last-change-reverse)
 (key-chord-define-global "YY" 'copy-outer)
 (key-chord-define-global "qq" 'avy-goto-line)
+(key-chord-define-global "ee" 'dabbrev-expand)
+(key-chord-define-global "CC" 'compile)
 
 (key-chord-mode +1)
 
