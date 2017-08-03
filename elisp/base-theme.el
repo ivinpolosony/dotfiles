@@ -1,6 +1,6 @@
-(use-package solarized-theme
-  :defer t
-  :init
-  (load-theme 'solarized-dark t))
+(use-package doom-themes
+   :defer t
+   :init
+   (load-theme 'doom-molokai t))
 
 (provide 'base-theme)

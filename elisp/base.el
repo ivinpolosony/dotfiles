@@ -101,6 +101,22 @@
 (use-package ivy)
 (ivy-mode 1)
 
+(setq-default
+ mode-line-buffer-identification
+ '(#("%2b" 0 3
+	 (local-map
+	  (keymap
+	   (header-line keymap
+					(mouse-3 . mode-line-next-buffer)
+					(down-mouse-3 . ignore)
+					(mouse-1 . mode-line-previous-buffer)
+					(down-mouse-1 . ignore))
+	   (mode-line keymap
+				  (mouse-3 . mode-line-next-buffer)
+				  (mouse-1 . mode-line-previous-buffer)))
+	  mouse-face mode-line-highlight help-echo
+	  "Buffer name\nmouse-1: Previous buffer\nmouse-3: Next buffer"
+	  face mode-line-buffer-id))))
 
 ;; org-mode: Don't ruin S-arrow to switch windows please (use M-+ and M-- instead to toggle)
 (setq org-replace-disputed-keys t)
