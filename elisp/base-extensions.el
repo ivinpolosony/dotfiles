@@ -117,6 +117,7 @@
 (use-package smartparens)
 (use-package wrap-region)
 (wrap-region-mode t)
+(wrap-region-global-mode)
 (wrap-region-add-wrappers
  '(("$" "$")
    ("{-" "-}" "#")
