@@ -85,11 +85,11 @@
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
 
-(use-package org-projectile
-  :config
-  (org-projectile:per-repo)
-  (setq org-projectile:per-repo-filename "todo.org"
-	org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
+;; (use-package org-projectile
+;;   :config
+;;   (org-projectile:per-repo)
+;;   (setq org-projectile:per-repo-filename "todo.org"
+;; 	org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
 
 (use-package org-bullets
   :config
@@ -184,7 +184,9 @@
   :ensure t
   :bind (("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
-
+(use-package tabbar-ruler
+  :ensure t
+)
 
 
 (provide 'base-extensions)
