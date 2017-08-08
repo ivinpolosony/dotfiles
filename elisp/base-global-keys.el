@@ -120,6 +120,7 @@
 
 ;; auto refresh dired when file changes
 (add-hook 'dired-mode-hook 'auto-revert-mode)
+(global-set-key (kbd "C-x d") 'neotree-toggle)
 
 (defalias 'e 'find-file)
 
@@ -161,7 +162,7 @@
 (require 'key-chord)
 ;; (setq key-chord-two-keys-delay .015
 ;;       key-chord-one-key-delay .020)
-(key-chord-define-global "ow" 'other-window)
+
 (key-chord-define-global "FF" 'find-file)
 (key-chord-define-global "xx" 'ivy-switch-buffer)
 (key-chord-define-global ";;" 'jump-char-forward)
