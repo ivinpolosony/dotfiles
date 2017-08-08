@@ -149,7 +149,7 @@
 (global-set-key [(control shift tab)] 'shk-tabbar-prev)
 
 (setq tabbar-ruler-global-tabbar t) ; If you want tabbar
-(setq tabbar-ruler-global-ruler t) ; if you want a global ruler
+;; (setq tabbar-ruler-global-ruler t) ; if you want a global ruler
 (setq tabbar-ruler-popup-menu t) ; If you want a popup menu.
 (setq tabbar-ruler-popup-toolbar t) ; If you want a popup toolbar
 (setq tabbar-ruler-popup-scrollbar t) ; If you want to only show the
@@ -161,7 +161,7 @@
 (require 'key-chord)
 ;; (setq key-chord-two-keys-delay .015
 ;;       key-chord-one-key-delay .020)
-(key-chord-define-global "BB" 'iswitchb)
+(key-chord-define-global "ow" 'other-window)
 (key-chord-define-global "FF" 'find-file)
 (key-chord-define-global "xx" 'ivy-switch-buffer)
 (key-chord-define-global ";;" 'jump-char-forward)

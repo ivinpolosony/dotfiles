@@ -13,7 +13,7 @@
 ;;   :config
 ;;   (dashboard-setup-startup-hook))
 
-(use-package ediff			
+(use-package ediff
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq-default ediff-highlight-all-diffs 'nil)
@@ -75,7 +75,7 @@
         neotree-smart-optn t
         neo-window-fixed-size nil)
   ;; Disable linum for neotree
-  (add-hook 'neo-after-create-hook 'disable-neotree-hook))
+)
 
 (use-package org
   :config
