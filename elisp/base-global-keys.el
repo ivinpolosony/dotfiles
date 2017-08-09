@@ -49,6 +49,11 @@
 
 
 (windmove-default-keybindings)
+(global-set-key (kbd "C-S-J") 'windmove-left)
+(global-set-key (kbd "C-S-:") 'windmove-right)
+(global-set-key (kbd "C-S-K") 'windmove-up)
+(global-set-key (kbd "C-S-L") 'windmove-down)
+
 
 ;; GROUP: Editing -> Killing
 (setq kill-ring-max 5000 ; increase kill-ring capacity
@@ -171,7 +176,6 @@
 (key-chord-define-global "~~" 'goto-last-change-reverse)
 (key-chord-define-global "YY" 'copy-outer)
 (key-chord-define-global "qq" 'avy-goto-line)
-(key-chord-define-global "ee" 'dabbrev-expand)
 (key-chord-define-global "CC" 'compile)
 
 (key-chord-mode +1)
