@@ -106,10 +106,15 @@
 (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
 (global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
 
-;; (global-set-key (kbd "M-<up>") 'move-line-up)
-;; (global-set-key (kbd "M-<down>") 'move-line-down)
-(global-set-key (kbd "M-<up>") 'move-region-up)
-(global-set-key (kbd "M-<down>") 'move-region-down)
+(global-set-key (kbd "M-<up>") 'move-line-up)
+(global-set-key (kbd "M-<down>") 'move-line-down)
+;; (global-set-key (kbd "M-<up>") 'move-region-up)
+;; (global-set-key (kbd "M-<down>") 'move-region-down)
+
+(global-set-key (kbd "C-j") 'backward-char) ;; Cos b is too far from
+(global-set-key (kbd "M-j") 'backward-word) ;; Cos b is too far from
+
+
 
 ;; Go to last change
 
