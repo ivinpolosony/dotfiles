@@ -152,7 +152,7 @@
     (defun-prefix-alt shk-tabbar-prev (tabbar-backward-tab) (tabbar-backward-group) (tabbar-mode 1))
     
 (global-set-key [(control tab)] 'shk-tabbar-next)
-(global-set-key [(control shift tab)] 'shk-tabbar-prev)
+(global-set-key (kbd "<C-iso-lefttab>") 'shk-tabbar-prev)
 
 (setq tabbar-ruler-global-tabbar t) ; If you want tabbar
 ;; (setq tabbar-ruler-global-ruler t) ; if you want a global ruler
