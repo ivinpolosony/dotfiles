@@ -188,5 +188,10 @@
   :ensure t
 )
 
+(use-package dumb-jump
+  :ensure t
+)
+
+
 
 (provide 'base-extensions)

@@ -51,8 +51,8 @@
 (windmove-default-keybindings)
 (global-set-key (kbd "C-S-J") 'windmove-left)
 (global-set-key (kbd "C-S-:") 'windmove-right)
-(global-set-key (kbd "C-S-K") 'windmove-up)
-(global-set-key (kbd "C-S-L") 'windmove-down)
+(global-set-key (kbd "C-S-K") 'windmove-down)
+(global-set-key (kbd "C-S-L") 'windmove-up)
 
 
 ;; GROUP: Editing -> Killing
@@ -139,6 +139,8 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-unset-key (kbd "M-<down-mouse-1>"))
+(global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 
 
 
@@ -167,7 +169,7 @@
                                         ; scroll bar when your mouse is moving.
 (require 'tabbar-ruler)
 
-
+(global-set-key (kbd "C-.") 'dumb-jump-go)
 ;; key chords
 (require 'key-chord)
 ;; (setq key-chord-two-keys-delay .015
