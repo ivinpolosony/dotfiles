@@ -170,6 +170,7 @@
 (require 'tabbar-ruler)
 
 (global-set-key (kbd "C-.") 'dumb-jump-go)
+(global-set-key (kbd "C-,") 'dumb-jump-back)
 ;; key chords
 (require 'key-chord)
 ;; (setq key-chord-two-keys-delay .015
