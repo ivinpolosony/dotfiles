@@ -1,6 +1,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
+vim.opt.termguicolors = true
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -17,6 +17,44 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- vim.opt.termguicolors = true
+-- UNDOFILE
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.expand('~/.config/nvim/undodir')
+
+-- Org mode support
+vim.opt.conceallevel = 2
+vim.opt.concealcursor = 'nc'
+vim.opt.wrap = true -- display lines as one long line
+
+-- local opts = { silent = true }
+local python3 = io.popen('which python3')
+if python3 then
+  vim.g.python3_host_prog = python3:read()
+  python3:close()
+end
+
+local python = io.popen('which python')
+if python then
+  vim.g.python_host_prog = python:read()
+  python:close()
+end
+
+-- Move to previous/next
+vim.keymap.set('n', '<C-j>', ':bprevious<CR>', vim.opts)
+vim.keymap.set('n', '<C-k>', ':bnext<CR>', vim.opts)
+
+-- Close buffer
+vim.keymap.set('n', ',bd', ':bdelete<CR>', vim.opts)
+vim.keymap.set('n', ',bda', ':w <bar> %bd <bar> e# <bar> bd# <CR>', vim.opts)
+
+--  Alternative Buffer
+vim.keymap.set("n", "<leader><TAB>", ":b#<CR>", vim.opts)
+
+vim.api.nvim_set_keymap('n', '<Leader>fs', ':w<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<M-d>', 'dw', { noremap = true, silent = true })
+
+
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -24,10 +62,200 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
-
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+
+  -- format on save
+  {
+    'sbdchd/neoformat',
+    config = function ()
+     vim.cmd([[ autocmd BufWritePre * Neoformat ]])
+    end
+  },
+
+  {
+    'ThePrimeagen/harpoon',
+    -- sets the marks upon calling `toggle` on the ui, instead of require `:w`.
+    save_on_toggle = false,
+
+    -- saves the harpoon file upon every change. disabling is unrecommended.
+    save_on_change = true,
+
+    -- sets harpoon to run the command immediately as it's passed to the terminal when calling `sendCommand`.
+    enter_on_sendcmd = false,
+
+    -- closes any tmux windows harpoon that harpoon creates when you close Neovim.
+    tmux_autoclose_windows = false,
+
+    -- filetypes that you want to prevent from adding to the harpoon list menu.
+    excluded_filetypes = { 'harpoon' },
+
+    -- set marks specific to each git branch inside git repository
+    mark_branch = false,    
+    config = function ()
+      vim.keymap.set("n", ",mf", ":lua require(\"harpoon.mark\").add_file()<CR>")
+      vim.keymap.set("n", "<leader>mf", ":lua require(\"harpoon.ui\").toggle_quick_menu()<CR>")
+      vim.keymap.set("n", "mn", ":lua require(\"harpoon.ui\").nav_next()<CR>")
+      vim.keymap.set("n", "mp", ":lua require(\"harpoon.ui\").nav_prev()<CR>")
+    end
+  },
+  'windwp/nvim-autopairs',
+
+  -- RUST
+  -- 'arzg/vim-rust-syntax-ext',
+  -- 'simrat39/rust-tools.nvim',
+  -- 'rust-lang/rust.vim',
+  -- 'saecki/crates.nvim',
+
+  -- UI
+
+  -- { 'kyazdani42/nvim-web-devicons' },      --- icons
+  -- { 'norcalli/nvim-colorizer.lua' },       --- Colorizer
+  -- { 'nvim-colortils/colortils.nvim' },    --- Colorpicker!
+  -- { 'xiyaowong/nvim-transparent' } ,       --- transparency
+  -- { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } },
+  -- { 'tamton-aquib/staline.nvim' },
+  -- { 'tamton-aquib/stuff.nvim' },
+  -- { 'willothy/flatten.nvim' },
+  -- { 'lukas-reineke/indent-blankline.nvim' },
+  -- { 'RRethy/vim-illuminate' },
+  -- { 'stevearc/dressing.nvim' },
+  -- { 'ghillb/cybu.nvim' },
+  -- { 'samodostal/image.nvim', requires = { 'nvim-lua/plenary.nvim' } },
+  -- { 'levouh/tint.nvim' },
+  --
+
+  -- inotify 
+  'rcarriga/nvim-notify',
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     -- add any options here
+  --     lsp = {
+  --       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+  --       override = {
+  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+  --         ["vim.lsp.util.stylize_markdown"] = true,
+  --         ["cmp.entry.get_documentation"] = true,
+  --       },
+  --     }
+  --   },
+  --   dependencies = {
+  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+  --     "MunifTanjim/nui.nvim",
+  --     -- OPTIONAL:
+  --     --   `nvim-notify` is only needed, if you want to use the notification view.
+  --     --   If not available, we use `mini` as the fallback
+  --     "rcarriga/nvim-notify",
+  --   }
+  -- },
+
+--   like zen 
+  {
+    "folke/twilight.nvim",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+
+  {
+    's1n7ax/nvim-window-picker',
+    name = 'window-picker',
+    event = 'VeryLazy',
+    version = '2.*',
+    config = function()
+      require'window-picker'.setup()
+    end,
+  },
+  -- quickrun 
+  {
+    "michaelb/sniprun",
+    branch = "master",
+    build = "sh install.sh",
+    -- do 'sh install.sh 1' if you want to force compile locally
+    -- (instead of fetching a binary from the github release). Requires Rust >= 1.65
+    config = function()
+      -- vim.api.nvim_set_keymap('v', 'f', '<Plug>SnipRun', {silent = true})
+      local opts = {noremap = true, silent = true}
+      vim.keymap.set("v", "<leader>r", ":SnipRun<CR>", opts)
+      vim.keymap.set("n", "<leader>r", ":SnipRun<CR>", opts)
+
+      -- vim.api.nvim_set_keymap('n', '<leader>f', '<Plug>SnipRunOperator', {silent = true})
+      vim.api.nvim_set_keymap('n', '<leader>ff', '<Plug>SnipRun', {silent = true})
+      require("sniprun").setup({
+        selected_interpreters = {},     --# use those instead of the default for the current filetype
+        repl_enable = {},               --# enable REPL-like behavior for the given interpreters
+        repl_disable = {},              --# disable REPL-like behavior for the given interpreters
+
+        interpreter_options = {         --# interpreter-specific options, see doc / :SnipInfo <name>
+
+          --# use the interpreter name as key
+          GFM_original = {
+            use_on_filetypes = {"markdown.pandoc"}    --# the 'use_on_filetypes' configuration key is
+            --# available for every interpreter
+          },
+          Python3_original = {
+            error_truncate = "auto"         --# Truncate runtime errors 'long', 'short' or 'auto'
+            --# the hint is available for every interpreter
+            --# but may not be always respected
+          }
+        },
+
+        --# you can combo different display modes as desired and with the 'Ok' or 'Err' suffix
+        --# to filter only sucessful runs (or errored-out runs respectively)
+        display = {
+          "Classic",                    --# display results in the command-line  area
+          "VirtualTextOk",              --# display ok results as virtual text (multiline is shortened)
+
+          -- "VirtualText",             --# display results as virtual text
+          -- "TempFloatingWindow",      --# display results in a floating window
+          -- "LongTempFloatingWindow",  --# same as above, but only long results. To use with VirtualText[Ok/Err]
+          "Terminal",                --# display results in a vertical split
+          -- "TerminalWithCode",        --# display results and code history in a vertical split
+          "NvimNotify",              --# display with the nvim-notify plugin
+          -- "Api"                      --# return output to a programming interface
+        },
+
+        live_display = { "VirtualTextOk" }, --# display mode used in live_mode
+        display_options = {
+          terminal_scrollback = vim.o.scrollback, --# change terminal display scrollback lines
+          terminal_line_number = false, --# whether show line number in terminal window
+          terminal_signcolumn = false,  --# whether show signcolumn in terminal window
+          terminal_persistence = true,  --# always keep the terminal open (true) or close it at every occasion (false)
+          terminal_width = 45,          --# change the terminal display option width
+          notification_timeout = 5      --# timeout for nvim_notify output
+        },
+
+        --# You can use the same keys to customize whether a sniprun producing
+        --# no output should display nothing or '(no output)'
+        show_no_output = {
+          "Classic",
+          "TempFloatingWindow",      --# implies LongTempFloatingWindow, which has no effect on its own
+        },
+
+        --# customize highlight groups (setting this overrides colorscheme)
+        snipruncolors = {
+          SniprunVirtualTextOk   =  {bg="#66eeff",fg="#000000",ctermbg="Cyan",cterfg="Black"},
+          SniprunFloatingWinOk   =  {fg="#66eeff",ctermfg="Cyan"},
+          SniprunVirtualTextErr  =  {bg="#881515",fg="#000000",ctermbg="DarkRed",cterfg="Black"},
+          SniprunFloatingWinErr  =  {fg="#881515",ctermfg="DarkRed"},
+        },
+
+        live_mode_toggle='off',      --# live mode toggle, see Usage - Running for more info   
+      --# miscellaneous compatibility/adjustement settings
+        inline_messages = false,    --# boolean toggle for a one-line way to display messages
+      --# to workaround sniprun not being able to display anything
+
+        borders = 'single',         --# display borders around floating windows
+      --# possible values are 'none', 'single', 'double', or 'shadow'
+    })
+    end,
+  },
+
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -107,13 +335,37 @@ require('lazy').setup({
       end,
     },
   },
-
+  {
+    'xiyaowong/transparent.nvim',
+    groups = { -- table: default groups
+      'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
+      'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
+      'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
+      'SignColumn', 'CursorLineNr', 'EndOfBuffer',
+    },
+    extra_groups = {}, -- table: additional groups that should be cleared
+    exclude_groups = {}, -- table: groups you don't want to clear
+    config = function ()
+    end
+  },
   {
     'chriskempson/base16-vim',
     priority = 1000,
+    telescope = true,
+    indentblankline = true,
+    notify = true,
+    ts_rainbow = true,
+    cmp = true,
+    illuminate = true,
     config = function()
       vim.cmd.colorscheme 'base16-gruvbox-dark-hard'
     end,
+  },
+  -- TODO 
+  {
+    'thinca/vim-quickrun',
+    config = function ()
+    end
   },
   {
     "scalameta/nvim-metals",
@@ -172,14 +424,50 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
+    dependencies = {
+      'chriskempson/base16-vim',
+      'nvim-tree/nvim-web-devicons'
+    },
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'gruvbox',
-        component_separators = '|',
-        section_separators = '',
+        component_separators = { left = '', right = ''},
+        section_separators = { left = '', right = ''},
+        disabled_filetypes = {
+          statusline = {},
+          winbar = {},
+        },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+        refresh = {
+          statusline = 1000,
+          tabline = 1000,
+          winbar = 1000,
+        }
       },
-    },
+      sections = {
+        lualine_a = {'mode'},
+        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_c = {'filename'},
+        lualine_x = {'encoding', 'fileformat', 'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {'filename'},
+        lualine_x = {'location'},
+        lualine_y = {},
+        lualine_z = {}
+      },
+      tabline = {},
+      winbar = {},
+      inactive_winbar = {},
+      extensions = {}
+    }
   },
   {
     -- Add indentation guides even on blank lines
@@ -187,11 +475,20 @@ require('lazy').setup({
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
     main = 'ibl',
+    opts = {
+      -- indent = { highlight = {CursorColumn","Whitespace"}, char = "" },
+      -- whitespace = {
+      --   highlight = {"Whitespace"},
+      --   remove_blankline_trail = false,
+      -- },
+      scope = { enabled = false },
+    }
+  },
+  -- "gc" to comment visual regions/lines
+  {
+    'numToStr/Comment.nvim',
     opts = {},
   },
-
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -272,8 +569,8 @@ vim.o.smartcase = true
 vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.o.updatetime = 200
+vim.o.timeoutlen = 200
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -302,6 +599,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+vim.diagnostic.config({ virtual_text = true})
+vim.cmd [[ autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false}) ]]
+local diagsign = function(opts)
+  vim.fn.sign_define(opts.name, {
+    texthl = opts.name,
+    text = opts.text,
+    numhl = ''
+  })
+end
+
+diagsign({name = 'DiagnosticSignError', text = '✘'})
+diagsign({name = 'DiagnosticSignWarn', text = '▲'})
+diagsign({name = 'DiagnosticSignHint', text = '⚑'})
+diagsign({name = 'DiagnosticSignInfo', text = ''})
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -319,9 +631,9 @@ require('telescope').setup {
 pcall(require('telescope').load_extension, 'fzf')
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
+vim.keymap.set('n', '<leader>ss', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
@@ -330,10 +642,10 @@ vim.keymap.set('n', '<leader>/', function()
 end, { desc = '[/] Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>/', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
@@ -347,7 +659,7 @@ vim.defer_fn(function()
       'bash', 'scala' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-    auto_install = false,
+    auto_install = true,
 
     highlight = { enable = true },
     indent = { enable = true },
@@ -430,8 +742,8 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<S-F6>', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<M-CR>', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -442,7 +754,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -484,9 +796,9 @@ require('mason-lspconfig').setup()
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
+  gopls = {},
+  pylsp = {},
+  rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -568,7 +880,6 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'nvim-metals' }
   },
 }
 
