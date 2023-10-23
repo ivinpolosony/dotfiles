@@ -1,0 +1,1 @@
+/Users/isony/.fzf/shell/key-bindings.fish

@@ -372,14 +372,19 @@ require('lazy').setup({
     ft = { "scala", "sc" },
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "mfussenegger/nvim-dap"
+      "mfussenegger/nvim-dap",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-vsnip" ,
+      "hrsh7th/vim-vsnip" ,
+
+
     },
     config = function()
       vim.api.nvim_create_autocmd("FileType", {
         -- NOTE: You may or may not want java included here. You will need it if you
         -- want basic Java support but it may also conflict if you are using
         -- something like nvim-jdtls which also works on a java filetype autocmd.
-        pattern = { "scala", "sbt", "java" },
+        pattern = { "scala", "sbt", "java","sc" },
         callback = function()
           local metals_config = require("metals").bare_config()
           metals_config.settings = {
@@ -721,7 +726,7 @@ end, 0)
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<F8>', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
