@@ -1,6 +1,19 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.opt.termguicolors = true
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
+
+
+-- vim.schedule(function()
+--   local buf = vim.api.nvim_create_buf(false, true)
+--   vim.api.nvim_buf_set_lines(buf, 0, -1, true, vim.split(content, "\n"))
+--   vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+--   vim.api.nvim_set_current_buf(buf)
+--   vim.cmd("split")
+-- end)
+
+
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -40,6 +53,7 @@ if python then
   python:close()
 end
 
+
 -- Move to previous/next
 vim.keymap.set('n', '<C-j>', ':bprevious<CR>', vim.opts)
 vim.keymap.set('n', '<C-k>', ':bnext<CR>', vim.opts)
@@ -65,7 +79,76 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  {
+    -- luarocks --local --lua-version=5.1 install magick
+    'edluffy/hologram.nvim',
+    auto_display = true,
+    config = function()
+      -- Example for configuring Neovim to load user-installed installed Lua rocks:
+    end,
+    rocks = { "magick" },
+  },
+  {
+    "benlubas/molten-nvim",
+    dependencies = { "3rd/image.nvim" },
+    build = ":UpdateRemotePlugins",
+    init = function()
+      -- these are examples, not defaults. Please see the readme
+      vim.g.molten_image_provider = "image.nvim"
+      vim.g.molten_output_win_max_height = 20
+      vim.g.molten_auto_open_output = false
 
+      vim.keymap.set("n", "<localleader>R", ":MoltenEvaluateOperator<CR>",
+        { silent = true, noremap = true, desc = "run operator selection" })
+      vim.keymap.set("n", "<localleader>rl", ":MoltenEvaluateLine<CR>",
+        { silent = true, noremap = true, desc = "evaluate line" })
+      vim.keymap.set("n", "<localleader>rc", ":MoltenReevaluateCell<CR>",
+        { silent = true, noremap = true, desc = "re-evaluate cell" })
+      vim.keymap.set("v", "<localleader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
+        { silent = true, noremap = true, desc = "evaluate visual selection" })
+    end,
+  },
+  {
+    -- see the image.nvim readme for more information about configuring this plugin
+    "3rd/image.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function()
+          require("nvim-treesitter.configs").setup({
+            ensure_installed = { "markdown" },
+            highlight = { enable = true },
+          })
+        end,
+      },
+    },
+    opts = {
+      backend = "kitty",
+      integrations = {
+        markdown = {
+          enabled = true,
+          clear_in_insert_mode = false,
+          download_remote_images = true,
+          only_render_image_at_cursor = false,
+          filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+        },
+        neorg = {
+          enabled = true,
+          clear_in_insert_mode = false,
+          download_remote_images = true,
+          only_render_image_at_cursor = false,
+          filetypes = { "norg" },
+        },
+      },
+      max_width = nil,
+      max_height = nil,
+      max_width_window_percentage = nil,
+      max_height_window_percentage = 50,
+      kitty_method = "normal",
+    },
+  },
   -- format on save
   {
     'sbdchd/neoformat',
@@ -181,8 +264,8 @@ require('lazy').setup({
     config = function()
       -- vim.api.nvim_set_keymap('v', 'f', '<Plug>SnipRun', {silent = true})
       local opts = {noremap = true, silent = true}
-      vim.keymap.set("v", "<leader>r", ":SnipRun<CR>", opts)
-      vim.keymap.set("n", "<leader>r", ":SnipRun<CR>", opts)
+      -- vim.keymap.set("v", "<leader>r", ":SnipRun<CR>", opts)
+      -- vim.keymap.set("n", "<leader>r", ":SnipRun<CR>", opts)
 
       -- vim.api.nvim_set_keymap('n', '<leader>f', '<Plug>SnipRunOperator', {silent = true})
       vim.api.nvim_set_keymap('n', '<leader>ff', '<Plug>SnipRun', {silent = true})
