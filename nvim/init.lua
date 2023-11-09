@@ -4,7 +4,10 @@ vim.opt.termguicolors = true
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
 package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
 
-
+vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
+vim.diagnostic.config({
+  virtual_text = false,
+})
 -- vim.schedule(function()
 --   local buf = vim.api.nvim_create_buf(false, true)
 --   vim.api.nvim_buf_set_lines(buf, 0, -1, true, vim.split(content, "\n"))
@@ -79,14 +82,31 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  -- {
+  --   -- luarocks --local --lua-version=5.1 install magick
+  --   'edluffy/hologram.nvim',
+  --   auto_display = true,
+  --   config = function()
+  --     -- Example for configuring Neovim to load user-installed installed Lua rocks:
+  --   end,
+  --   rocks = { "magick" },
+  -- },
+  
+  
   {
-    -- luarocks --local --lua-version=5.1 install magick
-    'edluffy/hologram.nvim',
-    auto_display = true,
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
-      -- Example for configuring Neovim to load user-installed installed Lua rocks:
+      require("lsp_lines").setup()
+      vim.diagnostic.config({
+        virtual_text = false,
+      })
+      vim.keymap.set(
+        "",
+        "<Leader>l",
+        require("lsp_lines").toggle,
+        { desc = "Toggle lsp_lines" }
+      )
     end,
-    rocks = { "magick" },
   },
   {
     "benlubas/molten-nvim",
@@ -96,8 +116,9 @@ require('lazy').setup({
       -- these are examples, not defaults. Please see the readme
       vim.g.molten_image_provider = "image.nvim"
       vim.g.molten_output_win_max_height = 20
-      vim.g.molten_auto_open_output = false
 
+      vim.keymap.set("v", "<localleader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
+      { desc = "execute visual selection", buffer = true, silent = true })
       vim.keymap.set("n", "<localleader>R", ":MoltenEvaluateOperator<CR>",
         { silent = true, noremap = true, desc = "run operator selection" })
       vim.keymap.set("n", "<localleader>rl", ":MoltenEvaluateLine<CR>",
@@ -687,8 +708,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-vim.diagnostic.config({ virtual_text = true})
-vim.cmd [[ autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false}) ]]
+-- vim.diagnostic.config({ virtual_text = true})
+-- vim.cmd [[ autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false}) ]]
 local diagsign = function(opts)
   vim.fn.sign_define(opts.name, {
     texthl = opts.name,
@@ -885,7 +906,17 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   gopls = {},
-  pylsp = {},
+  -- pylsp = {
+  --   plugins = {
+  --     pyright = {
+  --       environment = "/opt/homebrew/bin/python3",
+  --     }
+  --   }
+  -- },
+  pyright = {
+    filetypes = {'py','pynb'},
+    cmd = {"/opt/homebrew/bin/pyright-langserver", "--stdio"}
+  },
   rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
