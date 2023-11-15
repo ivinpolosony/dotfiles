@@ -124,6 +124,7 @@ map <a-w> :action EditorSelectWord<CR>
 map <a-f> w
 map <a-b> b
 map <a-d> dw
+map <a-d> dw
 "" map <C-j> 2j
 "" map <C-k> 2k
 
