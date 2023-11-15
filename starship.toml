@@ -1,0 +1,26 @@
+# right_format = """$all"""
+
+format = """$kubernetes\
+$directory\
+  $git_branch\
+\n $character"""
+
+[directory]
+truncation_length = 100
+truncate_to_repo = false
+style = "green"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = ""
+style = "bold purple"
+format = ' on [$symbol$branch(:$remote_branch)]($style)'
+
+[git_status]
+format = '[[($all_status )](fg:#769ff0 bg:#394260)]($style)'
+
+
+[kubernetes]
+symbol = "☸ "
+format = '[⛵ $context ](dimmed green) '
+disabled = false
