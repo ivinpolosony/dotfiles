@@ -2,7 +2,7 @@
 
 format = """$kubernetes\
 $directory\
-  $git_branch\
+  $git_branch <$git_status>\
 \n $character"""
 
 [directory]
@@ -12,12 +12,23 @@ style = "green"
 format = "[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
-symbol = ""
+symbol = " "
 style = "bold purple"
 format = ' on [$symbol$branch(:$remote_branch)]($style)'
 
 [git_status]
-format = '[[($all_status )](fg:#769ff0 bg:#394260)]($style)'
+conflicted = "⚔️ "
+ahead = "🏎️ 💨 ×${count}"
+behind = "🐢 ×${count}"
+diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
+untracked = "🛤️  ×${count}"
+stashed = "📦 "
+modified = "📝 ×${count}"
+staged = "🗃️  ×${count}"
+renamed = "📛 ×${count}"
+deleted = "🗑️  ×${count}"
+style = "bright-white"
+format = "$all_status$ahead_behind"
 
 
 [kubernetes]
