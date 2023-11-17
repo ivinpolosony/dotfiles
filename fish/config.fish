@@ -1,13 +1,15 @@
-abbr -a c cargo
-abbr -a e nvim
-abbr -a g git
-abbr -a gc 'git checkout'
-abbr -a ga 'git add -p'
-abbr -a vimdiff 'nvim -d'
-abbr -a ct 'cargo t'
-abbr -a l ls
-abbr -a ll 'ls -l'
-abbr -a lll 'ls -la'
+alias c="cargo"
+alias e="nvim"
+alias g="git"
+alias gc='git checkout'
+alias ga='git add -p'
+alias gst='git status'
+alias vimdiff='nvim -d'
+alias ct="cargo t"
+alias l="ls"
+alias ll='ls -l'
+alias lll='ls -la'
+alias cfd='/usr/local/bin/tmux-sessionizer'
 
 if test -f /opt/homebrew/Cellar/autojump/22.5.3_3/share/autojump/autojump.fish
     source /opt/homebrew/Cellar/autojump/22.5.3_3/share/autojump/autojump.fish
@@ -27,3 +29,9 @@ setenv LESS_TERMCAP_us \e'[04;38;5;146m' # begin underline
 setenv FZF_DEFAULT_COMMAND 'fd --type file --follow'
 setenv FZF_CTRL_T_COMMAND 'fd --type file --follow'
 setenv FZF_DEFAULT_OPTS '--height 20%'
+
+function starship_transient_prompt_func
+    starship module character
+end
+starship init fish | source
+enable_transience
