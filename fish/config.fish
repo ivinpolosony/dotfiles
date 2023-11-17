@@ -10,6 +10,7 @@ alias l="ls"
 alias ll='ls -l'
 alias lll='ls -la'
 alias cfd='/usr/local/bin/tmux-sessionizer'
+alias subl='open -a "Sublime Text"'
 
 if test -f /opt/homebrew/Cellar/autojump/22.5.3_3/share/autojump/autojump.fish
     source /opt/homebrew/Cellar/autojump/22.5.3_3/share/autojump/autojump.fish
