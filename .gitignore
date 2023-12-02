@@ -5,3 +5,4 @@ nvim/undodir/
 .vscode
 .DS_Store
 fish/completions/*
+lazy*.json
