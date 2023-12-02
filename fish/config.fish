@@ -12,10 +12,6 @@ alias lll='ls -la'
 alias cfd='/usr/local/bin/tmux-sessionizer'
 alias subl='open -a "Sublime Text"'
 
-if test -f /opt/homebrew/Cellar/autojump/22.5.3_3/share/autojump/autojump.fish
-    source /opt/homebrew/Cellar/autojump/22.5.3_3/share/autojump/autojump.fish
-end
-
 
 # colored man output
 # from http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
@@ -30,6 +26,7 @@ setenv LESS_TERMCAP_us \e'[04;38;5;146m' # begin underline
 setenv FZF_DEFAULT_COMMAND 'fd --type file --follow'
 setenv FZF_CTRL_T_COMMAND 'fd --type file --follow'
 setenv FZF_DEFAULT_OPTS '--height 20%'
+
 
 function starship_transient_prompt_func
     starship module character
