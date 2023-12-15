@@ -12,6 +12,16 @@ alias lll='ls -la'
 alias cfd='/usr/local/bin/tmux-sessionizer'
 alias subl='open -a "Sublime Text"'
 
+fish_add_path -a "/Users/$USER/.pyenv/shims"
+fish_add_path -a "~/.cargo/bin"
+fish_add_path -a "~/.local/bin/"
+fish_add_path -a "~/.docker/bin/"
+fish_add_path -a /opt/homebrew/bin
+fish_add_path -a /opt/homebrew/sbin
+fish_add_path -a "/Applications/kitty.app/Contents/MacOS"
+fish_add_path -a "/Users/ivin/Library/Application Support/Coursier/bin"
+fish_add_path -a "/Users/ivin/.fzf/bin"
+fish_add_path -a "/Users/ivin/.local/share/kickstart/lazy/fzf/bin"
 
 # colored man output
 # from http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
