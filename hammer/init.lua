@@ -1,9 +1,12 @@
-hs.hotkey.bind({"ctrl","alt"},"1", function()
-  hs.application.launchOrFocus("kitty")
-end)
+hs.loadSpoon("SpoonInstall")
+hs.loadSpoon("AppLauncher")
 
-hs.hotkey.bind({"ctrl","alt"},"2", function()
-  hs.application.launchOrFocus("Google Chrome Dev")
-end)
-
-
+spoon.SpoonInstall:andUse("AppLauncher", {
+	hotkeys = {
+		c = "Google Chrome Dev",
+		k = "Kitty",
+		z = "Zoom.us",
+		i = "InteliJ IDEA",
+		v = "Visual Studio Code - Insiders",
+	},
+})
