@@ -1,4 +1,31 @@
-return {
+local old = {
+	-- add treesitter support for scala
+	{
+		"nvim-treesitter/nvim-treesitter",
+		opts = function(_, opts)
+			vim.list_extend(opts.ensure_installed, { "scala", "java" })
+		end,
+	},
+	-- lualine component for metals
+	{
+		"nvim-lualine/lualine.nvim",
+		event = "VeryLazy",
+		opts = function(_, opts)
+			table.insert(opts.sections.lualine_x, 2, {
+				function()
+					local status = vim.g["metals_status"]
+					if status == nil then
+						return ""
+					end
+					return status
+				end,
+				color = function()
+					return require("lazyvim.util").ui.fg("DiagnosticWarn")
+				end,
+			})
+		end,
+	},
+
 	{
 		"scalameta/nvim-metals",
 		dependencies = {
@@ -8,6 +35,13 @@ return {
 		},
 		ft = { "scala", "sbt", "java" },
 		keys = {
+			{
+				"<leader>cW",
+				function()
+					require("metals").hover_worksheet()
+				end,
+				desc = "Metals Worksheet",
+			},
 			{
 				"<leader>me",
 				function()
@@ -28,10 +62,13 @@ return {
 			local config = metals.bare_config()
 
 			config.settings = {
-				showImplicitArguments = true,
 				excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
 				serverProperties = { "-Xmx2g" },
 				enableSemanticHighlighting = true,
+				showImplicitArguments = true,
+				showImplicitConversionsAndClasses = true,
+				showInferredType = true,
+				superMethodLensesEnabled = true,
 			}
 			config.init_options.statusBarProvider = "on"
 			-- cmp integration
@@ -93,3 +130,5 @@ return {
 		end,
 	},
 }
+
+return {}

@@ -1,9 +1,14 @@
-hs.hotkey.bind({"ctrl","alt"},"1", function()
-  hs.application.launchOrFocus("kitty")
-end)
+hs.loadSpoon('SpoonInstall')                 -- initialize the plugin
 
-hs.hotkey.bind({"ctrl","alt"},"2", function()
-  hs.application.launchOrFocus("Google Chrome Dev")
-end)
-
-
+spoon.SpoonInstall:andUse("AppLauncher", {
+  hotkeys = {
+    c = "Google Chrome Dev",
+    f = "Firefox Developer Edition",
+    n = "Notes",
+    k = "Kitty",
+    z = "Zoom.us",
+    i = "IntelliJ IDEA CE",
+    m = "YouTube Music",
+    s = "Safari",
+  }
+})
