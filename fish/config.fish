@@ -11,6 +11,7 @@ alias ll='ls -l'
 alias lll='ls -la'
 alias cfd='/usr/local/bin/tmux-sessionizer'
 alias subl='open -a "Sublime Text"'
+alias diff='difft'
 
 fish_add_path -a "/Users/$USER/.pyenv/shims"
 fish_add_path -a "~/.cargo/bin"

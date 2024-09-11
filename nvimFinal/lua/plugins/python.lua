@@ -20,4 +20,5 @@ local python_setup  = {
 }
 
 
-return python_setup
+-- return python_setup
+return {}

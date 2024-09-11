@@ -6,7 +6,10 @@ spoon.SpoonInstall:andUse("AppLauncher", {
 		c = "Google Chrome Dev",
 		k = "Kitty",
 		z = "Zoom.us",
-		i = "InteliJ IDEA",
+		i = "IntelliJ IDEA",
 		v = "Visual Studio Code - Insiders",
+		s = "Slack",
+		e = "Microsoft Edge",
+		o = "Microsoft Outlook",
 	},
 })

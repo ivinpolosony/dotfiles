@@ -10,7 +10,7 @@ end
 require("core.lazy")
 require("core.opts")
 require("core.keymaps")
--- vim.cmd.colorscheme("ayu")
+vim.cmd.colorscheme("ayu")
 
 local neodev = vim.F.npcall(require, "neodev")
 if neodev then

@@ -131,6 +131,7 @@ map <a-d> dw
 map <C-h> :action PreviousTab<CR>
 map <C-l> :action NextTab<CR>
 
+map <D-i> :action ShowErrorDescription<CR>
 
 " " map <C-d> :action EditorSelectWord<CR> " ditto
 " " better to use your two hands!

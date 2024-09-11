@@ -29,11 +29,23 @@ return {
 
 			config.settings = {
 				showImplicitArguments = true,
+				showImplicitConversionsAndClasses = true,
+				showInferredType = true,
 				excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
 				serverProperties = { "-Xmx2g" },
 				enableSemanticHighlighting = true,
 			}
-			config.init_options.statusBarProvider = "on"
+
+			config.init_options = {
+				icons = "unicode",
+				statusBarProvider = "on",
+			}
+
+			-- config.tvp = {
+			-- 	icons = {
+			-- 		enabled = true,
+			-- 	},
+			-- }
 			-- cmp integration
 			config.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -49,12 +61,24 @@ return {
 				},
 			}
 			dap.listeners.after["event_terminated"]["nvim-metals"] = function()
-				-- vim.notify("Tests have finished!")
+				vim.notify("Tests have finished!")
 				dap.repl.open()
 			end
 
 			config.on_attach = function(client, bufnr)
 				metals.setup_dap()
+				vim.api.nvim_set_keymap(
+					"n",
+					"<leader>mts",
+					':lua require("metals").toggle_setting("showImplicitArguments")',
+					{ noremap = true, silent = true }
+				)
+				vim.api.nvim_set_keymap(
+					"v",
+					"K",
+					':lua require("metals").type_of_range() <CR>',
+					{ noremap = true, silent = true }
+				)
 				require("lsp-format").on_attach(client, bufnr)
 			end
 
@@ -67,29 +91,6 @@ return {
 				end,
 				group = nvim_metals_group,
 			})
-
-			-- local metals_status = function()
-			--     return vim.g['metals_status']
-			-- end
-
-			-- require("lualine").setup({
-			--     options = {
-			--       theme = "auto",
-			--       disabled_filetypes = {},
-			--     },
-			--     sections = {
-			--       lualine_c = {
-			--         { metals_status, cond = function() return vim.g['metals_status'] ~= nil end }
-			--       },
-			--       lualine_x = {
-			--         { "filetype", icon_only = true },
-			--               "fileformat",
-			--               "filesize",
-			--           },
-			--       lualine_y = {'progress'},
-			--       lualine_z = {'location'}
-			--     }
-			--   })
 		end,
 	},
 }
