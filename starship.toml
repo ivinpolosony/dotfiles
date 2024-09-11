@@ -1,10 +1,5 @@
-# right_format = """$all"""
 
-format = """$kubernetes\
-$directory\
-  $git_branch <$git_status>\
-\n $character"""
-
+format = """$directory $kubernetes $git_branch \n $character"""
 [directory]
 truncation_length = 100
 truncate_to_repo = false
@@ -16,22 +11,9 @@ symbol = " "
 style = "bold purple"
 format = ' on [$symbol$branch(:$remote_branch)]($style)'
 
-[git_status]
-conflicted = "⚔️ "
-ahead = "🏎️ 💨 ×${count}"
-behind = "🐢 ×${count}"
-diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
-untracked = "🛤️  ×${count}"
-stashed = "📦 "
-modified = "📝 ×${count}"
-staged = "🗃️  ×${count}"
-renamed = "📛 ×${count}"
-deleted = "🗑️  ×${count}"
-style = "bright-white"
-format = "$all_status$ahead_behind"
 
 
 [kubernetes]
 symbol = "☸ "
-format = '[⛵ $context ](dimmed green) '
+format = '[⚓ $context ](white) '
 disabled = false
